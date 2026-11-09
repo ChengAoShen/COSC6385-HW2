@@ -1,3 +1,7 @@
 $ ./test
 Expect: [32;1mWait, do you smell something burning?[0m
-   Got: [33;1m,5>;, %!
+   Got: [33;1m,5>;, %!0 k +%!$"5 10%E!Q%''-!:#852.*[0m
+
+$ ./secret
+[32;1m[+][0m Secret: [33;1mBurn after reading this string, it is a secret string[0m
+[31;1m[!][0m Program requires root privileges (or read access to /proc/<pid>/pagemap)!
