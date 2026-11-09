@@ -138,7 +138,9 @@ Achieved TFLOP/s (and % of the device's precision peak) for `n × n` matmul:
 ## Part 3 — LoRA fine‑tuning of Gemma 3 1B
 
 Same model, LoRA rank 4, seqlen 256, batch 1, 3 epochs; steady epoch = median of
-epochs 1–2 (epoch 0 = compile, dropped):
+epochs 1–2 (epoch 0 = compile, dropped). *(The base `gemma3_1b` preset was used on
+both devices rather than `gemma3_instruct_1b`; they are the same 1 B architecture, so
+the training time and memory — what this part measures — are identical.)*
 
 | Device | Stack | epoch (s) | peak mem (MB) | epoch times (s) |
 |--------|-------|-----------|---------------|-----------------|
@@ -162,6 +164,56 @@ better (the point of the run is *training cost*, not answer quality for a 1 B ba
 model given ~40 s of tuning). Full transcripts are in `results/gemma_samples_*.txt`.
 
 # 5. Analysis
+
+## 5.1 Answers to the notebook's Part 1 questions
+
+1. **How large must `n` be for steady‑state throughput; why are small matmuls
+   inefficient?** The TPU only approaches its roof at **n = 8192** (bf16 climbs
+   4.8 % → 29.6 % → 70.5 % → **90.2 %** of peak across the four sizes); the T4 reaches
+   its much lower fp32 roof by n ≈ 2048 (~60 %). Small matmuls are inefficient because
+   the few µs of real arithmetic cannot amortise kernel‑launch/dispatch overhead and
+   cannot fill the MXU / SMs — they are launch‑ and memory‑bound, not compute‑bound.
+2. **`first_call_s` vs `median_s` — what does the first call measure?** The first call
+   is dominated by **XLA compilation** (trace → lower → build kernels) for that exact
+   shape and precision, which costs seconds; `median_s` is the steady execute‑only
+   time (sub‑ms–ms). E.g. TPU n = 8192 bf16: first 0.525 s vs median 0.0062 s (~85×).
+   This is why compilation must be timed separately and never counted as throughput.
+3. **Why do `fp32‑default` and `bf16` match on the TPU while `fp32‑highest` is slow?**
+   XLA's `default` precision runs fp32 inputs as a **single bf16 MXU pass**, so it
+   tracks the bf16 curve; `highest` forces true fp32 as **three bf16 passes** (≈3× the
+   work), collapsing n = 8192 from ~155 to ~31 TFLOP/s. Numerically, default/bf16 agree
+   to ~bf16 precision while highest is the accurate reference — the classic
+   precision‑vs‑throughput trade.
+4. **Fraction of peak reached (roofline).** TPU bf16 hit **90 % of its ~197 TFLOP/s**
+   peak at n = 8192; the T4 sits near its ~8 TFLOP/s fp32 roof for fp32 but only a few
+   % of its FP16‑tensor roof for bf16 (no bf16 unit). Per Wang et al. (2019): a large
+   matmul is high‑intensity and compute‑bound, so each device approaches the *height of
+   its own compute roof* — and the TPU's roof is far taller.
+
+## 5.2 Answers to the notebook's Part 2 questions
+
+1. **Rank by images/s and by cost/epoch — do they agree?** images/s:
+   **TPU bf16/512 (110k) > TPU fp32/512 (92k) > T4 (42–46k, all configs) > TPU @128 (32k)**.
+   On the free tier no compute‑unit rate is exposed, so **cost/epoch = $0 for every
+   run** — the cost ranking is a tie and therefore trivially "agrees." On a paid tier
+   cost = rate × `epoch_s`, which would rank by epoch time and still put TPU bf16/512
+   first.
+2. **Batch‑size effect; why does the TPU respond more strongly?** 128 → 512 barely
+   moves the TPU step (bf16 3.96 → 4.65 ms for 4× the work) so throughput jumps
+   32k → 110k, while the **T4's step nearly quadruples** (2.98 → 11.72 ms) and
+   throughput stays ~43k. The TPU's large MXU is starved at batch 128 and only
+   saturates at 512; the T4 is already compute‑bound at 128.
+3. **Does bf16 change accuracy or T4 speed?** Accuracy is unchanged within noise
+   (bs128: TPU 0.733 → 0.739, T4 0.734 → 0.740; bs512 ≈ 0.667 both). **On the T4 bf16
+   does not change speed** (bf16 ≈ fp32 step time — no native bf16, confirming Part 1);
+   on the TPU bf16/512 is the fastest configuration.
+4. **Does the CNN reach more or less of peak than the matmul; what limits it?** **Far
+   less.** The 3‑block CNN on 32×32 images is **low arithmetic intensity** (small convs,
+   many small kernels) and sits on the memory/latency side of the roofline, so it cannot
+   approach the 90 % the n = 8192 matmul reached. Limits: tiny per‑step work, launch
+   overhead, and an underfed MXU at small batch.
+
+## 5.3 Part 3 vs Part 2, and the 2019 paper
 
 **Is the Part‑3 speed gap similar to the Part‑2 CNN gap?** No — it is *much wider*,
 and for an instructive reason. Relating to Wang, Wei & Brooks (2019) and the
