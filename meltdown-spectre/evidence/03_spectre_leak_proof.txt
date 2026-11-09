@@ -1,0 +1,2 @@
+target idx 0x54 avg time=81.8 (n=2000)
+other idxs       avg time=261.5 (n=510000)

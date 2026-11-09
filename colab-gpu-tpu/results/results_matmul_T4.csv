@@ -1,0 +1,13 @@
+run_id,platform,device_kind,n,mode,tflops,pct_peak
+Tesla_T4_20261109_001738,gpu,Tesla T4,1024,fp32-highest,3.89,48.0
+Tesla_T4_20261109_001738,gpu,Tesla T4,1024,fp32-default,3.82,47.1
+Tesla_T4_20261109_001738,gpu,Tesla T4,1024,bf16,2.46,3.8
+Tesla_T4_20261109_001738,gpu,Tesla T4,2048,fp32-highest,2.15,26.5
+Tesla_T4_20261109_001738,gpu,Tesla T4,2048,fp32-default,4.86,60.0
+Tesla_T4_20261109_001738,gpu,Tesla T4,2048,bf16,4.97,7.6
+Tesla_T4_20261109_001738,gpu,Tesla T4,4096,fp32-highest,4.73,58.4
+Tesla_T4_20261109_001738,gpu,Tesla T4,4096,fp32-default,4.55,56.2
+Tesla_T4_20261109_001738,gpu,Tesla T4,4096,bf16,4.67,7.2
+Tesla_T4_20261109_001738,gpu,Tesla T4,8192,fp32-highest,4.38,54.0
+Tesla_T4_20261109_001738,gpu,Tesla T4,8192,fp32-default,4.37,53.9
+Tesla_T4_20261109_001738,gpu,Tesla T4,8192,bf16,4.38,6.7

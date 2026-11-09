@@ -1,0 +1,2 @@
+run_id,platform,device_kind,n_devices,jax,keras,keras_hub,python,colab_runtime,seqlen,epochs,batch,lora_rank,load_s,train_total_s,epoch_s,peak_mem_mb,epoch_times
+NVIDIA_GeForce_RTX_5070_Ti_20261108_220636,gpu,NVIDIA GeForce RTX 5070 Ti,1,torch-2.11.0+cu128,3.15.1,0.33.0,3.12.15,local (not Colab); Keras3 torch backend; mixed_bfloat16 + jit_compile,256,3,1,4,3.2,253.8,43.28,6553.4,"[165.7, 43.1, 43.5]"

@@ -1,0 +1,322 @@
+Spectre and Meltdown mitigation detection tool v26.36.0926588-git03f5e8f
+
+Checking for vulnerabilities on current system
+
+Kernel information
+* Kernel is Linux 7.2.14-arch1-1 #1 SMP PREEMPT_DYNAMIC Fri, 30 Oct 2026 14:32:40 +0000 x86_64
+* Kernel image found at /lib/modules/7.2.14-arch1-1/vmlinuz
+* Kernel config found at /proc/config.gz
+* Kernel System.map found at /proc/kallsyms
+
+Hardware check
+* CPU details
+  * Vendor: AuthenticAMD
+  * Model name: AMD Ryzen 7 9800X3D 8-Core Processor
+  * Family: 0x1a  Model: 0x44  Stepping: 0x00
+  * Microcode: 0xb404023
+  * CPUID: 0x00b40f40
+  * Running as VM guest: NO
+* Hardware support (CPU microcode) for mitigation techniques
+  * Indirect Branch Restricted Speculation (IBRS)
+    * SPEC_CTRL MSR is available: UNKNOWN (No read permission for /dev/cpu/0/msr)
+    * CPU indicates IBRS capability: YES (ibrs flag in /proc/cpuinfo)
+    * CPU indicates preferring IBRS always-on: UNKNOWN (Couldn't load cpuid module)
+    * CPU indicates preferring IBRS over retpoline: UNKNOWN (Couldn't load cpuid module)
+  * Indirect Branch Prediction Barrier (IBPB)
+    * CPU indicates IBPB capability: YES (SPEC_CTRL feature bit)
+    * CPU indicates IBPB flushes return predictions: UNKNOWN (Couldn't load cpuid module)
+  * Single Thread Indirect Branch Predictors (STIBP)
+    * SPEC_CTRL MSR is available: UNKNOWN (No read permission for /dev/cpu/0/msr)
+    * CPU indicates STIBP capability: YES (stibp flag in /proc/cpuinfo)
+    * CPU indicates preferring STIBP always-on: UNKNOWN (Couldn't load cpuid module)
+  * Speculative Store Bypass Disable (SSBD)
+    * CPU indicates SSBD capability: YES (SSBD (cpuinfo))
+  * L1 data cache invalidation
+    * CPU indicates L1D flush capability: YES (flush_l1d flag in /proc/cpuinfo)
+  * Selective Branch Predictor Barrier (SBPB)
+    * PRED_CMD MSR supports SBPB bit write: UNKNOWN (not allowed to write msr)
+  * Transient Scheduler Attacks
+    * CPU indicates TSA_SQ_NO: UNKNOWN (Couldn't load cpuid module)
+    * CPU indicates TSA_L1_NO: UNKNOWN (Couldn't load cpuid module)
+    * CPU indicates VERW clears CPU buffers: UNKNOWN (Couldn't load cpuid module)
+    * CPU indicates AutoIBRS capability: UNKNOWN (Couldn't load cpuid module)
+  * CPU supports Transactional Synchronization Extensions (TSX): NO
+  * CPU supports TSX Force Abort (TSX_FORCE_ABORT): NO
+  * CPU supports Software Guard Extensions (SGX): NO
+  * CPU supports Special Register Buffer Data Sampling (SRBDS): NO
+  * CPU microcode is known to fix Zenbleed: NO
+  * CPU microcode is known to cause stability problems: NO (family 0x1a model 0x44 stepping 0x0 ucode 0xb404023 cpuid 0xb40f40 pfid 0x8)
+  * CPU microcode is the latest known available version: NO (latest version is 0xb40403b dated 2026/06/20 according to builtin firmwares DB v352+i20260925+3c73)
+* CPU vulnerability to the speculative execution attack variants
+  * Affected by CVE-2017-5753 (Spectre Variant 1, bounds check bypass): YES
+  * Affected by CVE-2017-5715 (Spectre Variant 2, branch target injection): YES
+  * Affected by CVE-2017-5754 (Variant 3, Meltdown, rogue data cache load): NO
+  * Affected by CVE-2018-3640 (Variant 3a, rogue system register read): NO
+  * Affected by CVE-2018-3639 (Variant 4, speculative store bypass): YES
+  * Affected by CVE-2018-3615 (Foreshadow (SGX), L1 terminal fault): NO
+  * Affected by CVE-2018-3620 (Foreshadow-NG (OS), L1 terminal fault): NO
+  * Affected by CVE-2018-3646 (Foreshadow-NG (VMM), L1 terminal fault): NO
+  * Affected by CVE-2018-12126 (Fallout, microarchitectural store buffer data sampling (MSBDS)): NO
+  * Affected by CVE-2018-12130 (ZombieLoad, microarchitectural fill buffer data sampling (MFBDS)): NO
+  * Affected by CVE-2018-12127 (RIDL, microarchitectural load port data sampling (MLPDS)): NO
+  * Affected by CVE-2019-11091 (RIDL, microarchitectural data sampling uncacheable memory (MDSUM)): NO
+  * Affected by CVE-2019-11135 (ZombieLoad V2, TSX Asynchronous Abort (TAA)): NO
+  * Affected by CVE-2018-12207 (No eXcuses, iTLB Multihit, machine check exception on page size changes (MCEPSC)): NO
+  * Affected by CVE-2020-0543 (Special Register Buffer Data Sampling (SRBDS)): NO
+  * Affected by CVE-2022-21123 (Shared Buffers Data Read (SBDR), MMIO Stale Data): NO
+  * Affected by CVE-2022-21125 (Shared Buffers Data Sampling (SBDS), MMIO Stale Data): NO
+  * Affected by CVE-2022-21166 (Device Register Partial Write (DRPW), MMIO Stale Data): NO
+  * Affected by CVE-2023-20588 (Division by Zero, AMD Zen1 speculative data leak): NO
+  * Affected by CVE-2023-20593 (Zenbleed, cross-process information leak): NO
+  * Affected by CVE-2022-40982 (Downfall, gather data sampling (GDS)): NO
+  * Affected by CVE-2022-29900 (Retbleed, arbitrary speculative code execution with return instructions (AMD)): NO
+  * Affected by CVE-2022-29901 (Retbleed, arbitrary speculative code execution with return instructions (Intel)): NO
+  * Affected by CVE-2023-20569 (Inception, return address security (RAS)): NO
+  * Affected by CVE-2023-23583 (Reptar, redundant prefix issue): NO
+  * Affected by CVE-2024-36350 (Transient Scheduler Attack - Store Queue (TSA-SQ)): NO
+  * Affected by CVE-2024-36357 (Transient Scheduler Attack - L1 (TSA-L1)): NO
+  * Affected by CVE-2024-28956 (Indirect Target Selection (ITS)): NO
+  * Affected by CVE-2025-40300 (VMScape, VM-exit stale branch prediction): YES
+  * Affected by CVE-2023-28746 (Register File Data Sampling (RFDS)): NO
+  * Affected by CVE-2024-45332 (Branch Privilege Injection (BPI)): NO
+  * Affected by CVE-0000-0001 (Straight-Line Speculation (SLS)): YES
+  * Affected by CVE-2025-54505 (FPDSS, AMD Zen1 Floating-Point Divider Stale Data Leak): NO
+
+CVE-2017-5753 aka 'Spectre Variant 1, bounds check bypass'
+* Mitigated according to the /sys interface: YES (Mitigation: usercopy/swapgs barriers and __user pointer sanitization)
+* Kernel has spectre_v1 mitigation (kernel image): YES (usercopy/swapgs barriers and target sanitization)
+* Kernel has the Red Hat/Ubuntu patch: NO
+> STATUS: NOT VULNERABLE (Mitigation: usercopy/swapgs barriers and __user pointer sanitization)
+
+CVE-2017-5715 aka 'Spectre Variant 2, branch target injection'
+* Mitigated according to the /sys interface: YES (Mitigation: Enhanced / Automatic IBRS; IBPB: conditional; STIBP: always-on; PBRSB-eIBRS: Not affected; BHI: Not affected)
+* This system is a host running a hypervisor: NO
+* Mitigation 1
+  * Kernel is compiled with IBRS support: YES
+    * IBRS enabled and active: YES
+  * Kernel is compiled with IBPB support: YES
+    * IBPB enabled and active: YES
+  * Kernel compiled with retpoline option: YES
+* Mitigation 3 (sub-mitigations)
+  * Base Spectre v2 mitigation mode: Enhanced / Automatic IBRS
+  * IBPB mode: YES (conditional)
+  * STIBP status: YES (always-on)
+  * PBRSB-eIBRS mitigation: Not affected
+  * BHI mitigation: Not affected
+  * Non-retpoline module loaded: NO
+> STATUS: NOT VULNERABLE (Mitigation: Enhanced / Automatic IBRS; IBPB: conditional; STIBP: always-on; PBRSB-eIBRS: Not affected; BHI: Not affected)
+
+CVE-2017-5754 aka 'Variant 3, Meltdown, rogue data cache load'
+* Mitigated according to the /sys interface: YES (Not affected)
+* Kernel supports Page Table Isolation (PTI): YES
+  * PTI enabled and active: UNKNOWN (dmesg truncated, please reboot and relaunch this script)
+  * Reduced performance impact of PTI: YES (CPU supports INVPCID, performance impact of PTI will be greatly reduced)
+* Running as a Xen PV DomU: NO
+> STATUS: NOT VULNERABLE (your CPU vendor reported your CPU model as not affected)
+
+CVE-2018-3640 aka 'Variant 3a, rogue system register read'
+* CPU microcode mitigates the vulnerability: YES
+> STATUS: NOT VULNERABLE (your CPU vendor reported your CPU model as not affected)
+
+CVE-2018-3639 aka 'Variant 4, speculative store bypass'
+* Mitigated according to the /sys interface: YES (Mitigation: Speculative Store Bypass disabled via prctl)
+* Kernel supports disabling speculative store bypass (SSB): YES (found in /proc/self/status)
+* SSB mitigation is enabled and active: YES (per-thread through prctl)
+* SSB mitigation currently active for selected processes: NO (no process found using SSB mitigation through prctl)
+> STATUS: NOT VULNERABLE (Mitigation: Speculative Store Bypass disabled via prctl)
+
+CVE-2018-3615 aka 'Foreshadow (SGX), L1 terminal fault'
+* CPU microcode mitigates the vulnerability: N/A
+> STATUS: NOT VULNERABLE (your CPU vendor reported your CPU model as not affected)
+
+CVE-2018-3620 aka 'Foreshadow-NG (OS), L1 terminal fault'
+* Mitigated according to the /sys interface: YES (Not affected)
+* Kernel supports PTE inversion: YES (found in kernel image)
+* PTE inversion enabled and active: NO
+> STATUS: NOT VULNERABLE (your CPU vendor reported your CPU model as not affected)
+
+CVE-2018-3646 aka 'Foreshadow-NG (VMM), L1 terminal fault'
+* Information from the /sys interface: Not affected
+* This system is a host running a hypervisor: NO
+* Mitigation 1 (KVM)
+  * EPT is disabled: N/A (the kvm_intel module is not loaded)
+* Mitigation 2
+  * L1D flush is supported by kernel: YES (found flush_l1d in /proc/cpuinfo)
+  * L1D flush enabled: NO
+  * Hardware-backed L1D flush supported: YES (performance impact of the mitigation will be greatly reduced)
+  * Hyper-Threading (SMT) is enabled: YES
+> STATUS: NOT VULNERABLE (your CPU vendor reported your CPU model as not affected)
+
+CVE-2018-12126 aka 'Fallout, microarchitectural store buffer data sampling (MSBDS)'
+* Mitigated according to the /sys interface: YES (Not affected)
+* Kernel supports using MD_CLEAR mitigation: YES (found md_clear implementation evidence in kernel image)
+* Kernel mitigation is enabled and active: NO
+* SMT is either mitigated or disabled: NO
+> STATUS: NOT VULNERABLE (your CPU vendor reported your CPU model as not affected)
+
+CVE-2018-12130 aka 'ZombieLoad, microarchitectural fill buffer data sampling (MFBDS)'
+* Mitigated according to the /sys interface: YES (Not affected)
+* Kernel supports using MD_CLEAR mitigation: YES (found md_clear implementation evidence in kernel image)
+* Kernel mitigation is enabled and active: NO
+* SMT is either mitigated or disabled: NO
+> STATUS: NOT VULNERABLE (your CPU vendor reported your CPU model as not affected)
+
+CVE-2018-12127 aka 'RIDL, microarchitectural load port data sampling (MLPDS)'
+* Mitigated according to the /sys interface: YES (Not affected)
+* Kernel supports using MD_CLEAR mitigation: YES (found md_clear implementation evidence in kernel image)
+* Kernel mitigation is enabled and active: NO
+* SMT is either mitigated or disabled: NO
+> STATUS: NOT VULNERABLE (your CPU vendor reported your CPU model as not affected)
+
+CVE-2019-11091 aka 'RIDL, microarchitectural data sampling uncacheable memory (MDSUM)'
+* Mitigated according to the /sys interface: YES (Not affected)
+* Kernel supports using MD_CLEAR mitigation: YES (found md_clear implementation evidence in kernel image)
+* Kernel mitigation is enabled and active: NO
+* SMT is either mitigated or disabled: NO
+> STATUS: NOT VULNERABLE (your CPU vendor reported your CPU model as not affected)
+
+CVE-2019-11135 aka 'ZombieLoad V2, TSX Asynchronous Abort (TAA)'
+* Mitigated according to the /sys interface: YES (Not affected)
+* TAA mitigation is supported by kernel: YES (found tsx_async_abort in kernel image)
+* TAA mitigation enabled and active: NO
+> STATUS: NOT VULNERABLE (your CPU vendor reported your CPU model as not affected)
+
+CVE-2018-12207 aka 'No eXcuses, iTLB Multihit, machine check exception on page size changes (MCEPSC)'
+* Mitigated according to the /sys interface: YES (Not affected)
+* This system is a host running a hypervisor: NO
+* iTLB Multihit mitigation is supported by kernel: YES (found itlb_multihit in kernel image)
+* iTLB Multihit mitigation enabled and active: NO
+> STATUS: NOT VULNERABLE (your CPU vendor reported your CPU model as not affected)
+
+CVE-2020-0543 aka 'Special Register Buffer Data Sampling (SRBDS)'
+* Mitigated according to the /sys interface: YES (Not affected)
+* SRBDS mitigation control is supported by the kernel: YES (found SRBDS implementation evidence in kernel image. Your kernel is up to date for SRBDS mitigation)
+* SRBDS mitigation control is enabled and active: NO
+> STATUS: NOT VULNERABLE (your CPU vendor reported your CPU model as not affected)
+
+CVE-2022-21123 aka 'Shared Buffers Data Read (SBDR), MMIO Stale Data'
+* Mitigated according to the /sys interface: YES (Not affected)
+* Kernel supports MMIO Stale Data mitigation: YES (found MMIO Stale Data mitigation evidence in kernel image)
+* CPU microcode supports Fill Buffer clearing: NO
+* Kernel mitigation is enabled and active: NO
+* SMT is either mitigated or disabled: NO
+> STATUS: NOT VULNERABLE (your CPU vendor reported your CPU model as not affected)
+
+CVE-2022-21125 aka 'Shared Buffers Data Sampling (SBDS), MMIO Stale Data'
+* Mitigated according to the /sys interface: YES (Not affected)
+* Kernel supports MMIO Stale Data mitigation: YES (found MMIO Stale Data mitigation evidence in kernel image)
+* CPU microcode supports Fill Buffer clearing: NO
+* Kernel mitigation is enabled and active: NO
+* SMT is either mitigated or disabled: NO
+> STATUS: NOT VULNERABLE (your CPU vendor reported your CPU model as not affected)
+
+CVE-2022-21166 aka 'Device Register Partial Write (DRPW), MMIO Stale Data'
+* Mitigated according to the /sys interface: YES (Not affected)
+* Kernel supports MMIO Stale Data mitigation: YES (found MMIO Stale Data mitigation evidence in kernel image)
+* CPU microcode supports Fill Buffer clearing: NO
+* Kernel mitigation is enabled and active: NO
+* SMT is either mitigated or disabled: NO
+> STATUS: NOT VULNERABLE (your CPU vendor reported your CPU model as not affected)
+
+CVE-2023-20588 aka 'Division by Zero, AMD Zen1 speculative data leak'
+* Kernel supports DIV0 mitigation: NO
+* DIV0 mitigation enabled and active: UNKNOWN (dmesg truncated, cannot check for DIV0 message)
+* SMT (Simultaneous Multi-Threading) is enabled: YES
+> STATUS: NOT VULNERABLE (your CPU vendor reported your CPU model as not affected)
+
+CVE-2023-20593 aka 'Zenbleed, cross-process information leak'
+* Zenbleed mitigation is supported by kernel: YES (found zenbleed message in kernel image)
+* Zenbleed kernel mitigation enabled and active: UNKNOWN (No read permission for /dev/cpu/0/msr)
+* Zenbleed mitigation is supported by CPU microcode: UNKNOWN
+> STATUS: NOT VULNERABLE (your CPU vendor reported your CPU model as not affected)
+
+CVE-2022-40982 aka 'Downfall, gather data sampling (GDS)'
+* Mitigated according to the /sys interface: YES (Not affected)
+* GDS is mitigated by microcode: UNKNOWN (couldn't read MSR for GDS capability)
+* Kernel supports software mitigation by disabling AVX: YES (found gather_data_sampling in kernel image)
+* Kernel has disabled AVX as a mitigation: NO (AVX support is enabled)
+> STATUS: NOT VULNERABLE (your CPU vendor reported your CPU model as not affected)
+
+CVE-2022-29900 aka 'Retbleed, arbitrary speculative code execution with return instructions (AMD)'
+* Mitigated according to the /sys interface: YES (Not affected)
+* Kernel supports mitigation: YES (found retbleed mitigation logic in kernel image)
+* Kernel compiled with UNRET_ENTRY support (untrained return thunk): YES
+* Kernel compiled with IBPB_ENTRY support: YES
+> STATUS: NOT VULNERABLE (your CPU vendor reported your CPU model as not affected)
+
+CVE-2022-29901 aka 'Retbleed, arbitrary speculative code execution with return instructions (Intel)'
+* Mitigated according to the /sys interface: YES (Not affected)
+* Kernel supports mitigation: YES (found retbleed mitigation logic in kernel image)
+* Kernel compiled with IBRS_ENTRY support: YES
+* CPU supports Enhanced IBRS (IBRS_ALL): UNKNOWN
+* CPU has RSB Alternate Behavior (RSBA): UNKNOWN
+> STATUS: NOT VULNERABLE (your CPU vendor reported your CPU model as not affected)
+
+CVE-2023-20569 aka 'Inception, return address security (RAS)'
+* Mitigated according to the /sys interface: YES (Mitigation: IBPB on VMEXIT only)
+* Kernel supports mitigation: YES (found spec_rstack_overflow in kernel image)
+* Kernel compiled with SRSO support: YES
+* Kernel has accurate SRSO reporting: YES
+* Kernel compiled with IBPB_ENTRY support: YES
+* Kernel is aware of IBPB return predictor bypass: YES (ibpb_no_ret found in kernel image)
+> STATUS: NOT VULNERABLE (your CPU vendor reported your CPU model as not affected)
+
+CVE-2023-23583 aka 'Reptar, redundant prefix issue'
+> STATUS: NOT VULNERABLE (your CPU vendor reported your CPU model as not affected)
+
+CVE-2024-36350 aka 'Transient Scheduler Attack - Store Queue (TSA-SQ)'
+* Mitigated according to the /sys interface: YES (Not affected)
+* This system is a host running a hypervisor: NO
+* Kernel supports TSA mitigation: YES (found TSA mitigation message in kernel image)
+* CPU explicitly indicates not vulnerable to TSA-SQ (TSA_SQ_NO): UNKNOWN (couldn't read CPUID leaf 0x80000021)
+* Microcode supports VERW buffer clearing: UNKNOWN (couldn't read CPUID leaf 0x80000021)
+* Hyper-Threading (SMT) is enabled: YES
+> STATUS: NOT VULNERABLE (your CPU vendor reported your CPU model as not affected)
+
+CVE-2024-36357 aka 'Transient Scheduler Attack - L1 (TSA-L1)'
+* Mitigated according to the /sys interface: YES (Not affected)
+* This system is a host running a hypervisor: NO
+* Kernel supports TSA mitigation: YES (found TSA mitigation message in kernel image)
+* CPU explicitly indicates not vulnerable to TSA-L1 (TSA_L1_NO): UNKNOWN (couldn't read CPUID leaf 0x80000021)
+* Microcode supports VERW buffer clearing: UNKNOWN (couldn't read CPUID leaf 0x80000021)
+> STATUS: NOT VULNERABLE (your CPU vendor reported your CPU model as not affected)
+
+CVE-2024-28956 aka 'Indirect Target Selection (ITS)'
+* Mitigated according to the /sys interface: YES (Not affected)
+* Kernel supports ITS mitigation: YES (found indirect_target_selection in kernel image)
+* CPU explicitly indicates not being affected by ITS (ITS_NO): NO
+> STATUS: NOT VULNERABLE (your CPU vendor reported your CPU model as not affected)
+
+CVE-2025-40300 aka 'VMScape, VM-exit stale branch prediction'
+* Mitigated according to the /sys interface: YES (Mitigation: IBPB on VMEXIT)
+* This system is a host running a hypervisor: NO
+* Kernel supports VMScape mitigation: YES (found vmscape in kernel image)
+> STATUS: NOT VULNERABLE (Mitigation: IBPB on VMEXIT)
+
+CVE-2023-28746 aka 'Register File Data Sampling (RFDS)'
+* Mitigated according to the /sys interface: YES (Not affected)
+* CPU microcode mitigates the vulnerability: UNKNOWN (couldn't read MSR)
+* Kernel supports RFDS mitigation (VERW on transitions): YES (found 'Clear Register File' string in kernel image)
+* RFDS mitigation is enabled and active: NO
+> STATUS: NOT VULNERABLE (your CPU vendor reported your CPU model as not affected)
+
+CVE-2024-45332 aka 'Branch Privilege Injection (BPI)'
+> STATUS: NOT VULNERABLE (your CPU vendor reported your CPU model as not affected)
+
+
+CVE-2025-54505 aka 'FPDSS, AMD Zen1 Floating-Point Divider Stale Data Leak'
+* Kernel supports FPDSS mitigation: YES (found FPDSS mitigation message in kernel image)
+* FPDSS mitigation enabled and active: N/A (CPU is incompatible)
+> STATUS: NOT VULNERABLE (your CPU vendor reported your CPU model as not affected)
+
+> SUMMARY: CVE-2017-5753:OK  CVE-2017-5715:OK  CVE-2017-5754:OK  CVE-2018-3640:OK 
+           CVE-2018-3639:OK  CVE-2018-3615:OK  CVE-2018-3620:OK  CVE-2018-3646:OK 
+           CVE-2018-12126:OK CVE-2018-12130:OK CVE-2018-12127:OK CVE-2019-11091:OK
+           CVE-2019-11135:OK CVE-2018-12207:OK CVE-2020-0543:OK  CVE-2022-21123:OK
+           CVE-2022-21125:OK CVE-2022-21166:OK CVE-2023-20588:OK CVE-2023-20593:OK
+           CVE-2022-40982:OK CVE-2022-29900:OK CVE-2022-29901:OK CVE-2023-20569:OK
+           CVE-2023-23583:OK CVE-2024-36350:OK CVE-2024-36357:OK CVE-2024-28956:OK
+           CVE-2025-40300:OK CVE-2023-28746:OK CVE-2024-45332:OK CVE-2025-54505:OK
+
+Need more detailed information about mitigation options? Use --explain
+A false sense of security is worse than no security at all, see --disclaimer

@@ -1,0 +1,2 @@
+avg cache HIT : 86.3 cycles
+avg cache MISS: 464.6 cycles

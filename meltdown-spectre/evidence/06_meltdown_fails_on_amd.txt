@@ -1,0 +1,3 @@
+$ ./test
+Expect: [32;1mWait, do you smell something burning?[0m
+   Got: [33;1m,5>;, %!

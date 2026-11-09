@@ -1,0 +1,28 @@
+# Host CPU & kernel
+$ uname -a
+Linux arch-server 7.2.14-arch1-1 #1 SMP PREEMPT_DYNAMIC Fri, 30 Oct 2026 14:32:40 +0000 x86_64 GNU/Linux
+
+$ lscpu | grep -E 'Model name|Vendor|Flags'
+Vendor ID:                               AuthenticAMD
+Model name:                              AMD Ryzen 7 9800X3D 8-Core Processor
+
+# /sys vulnerabilities:
+gather_data_sampling: Not affected
+ghostwrite:        Not affected
+indirect_target_selection: Not affected
+itlb_multihit:     Not affected
+l1tf:              Not affected
+mds:               Not affected
+meltdown:          Not affected
+mmio_stale_data:   Not affected
+old_microcode:     Not affected
+reg_file_data_sampling: Not affected
+retbleed:          Not affected
+spec_rstack_overflow: Mitigation: IBPB on VMEXIT only
+spec_store_bypass: Mitigation: Speculative Store Bypass disabled via prctl
+spectre_v1:        Mitigation: usercopy/swapgs barriers and __user pointer sanitization
+spectre_v2:        Mitigation: Enhanced / Automatic IBRS; IBPB: conditional; STIBP: always-on; PBRSB-eIBRS: Not affected; BHI: Not affected
+srbds:             Not affected
+tsa:               Not affected
+tsx_async_abort:   Not affected
+vmscape:           Mitigation: IBPB on VMEXIT

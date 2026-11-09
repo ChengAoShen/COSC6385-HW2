@@ -1,0 +1,4 @@
+run_id,platform,device_kind,n_devices,jax,keras,keras_hub,python,colab_runtime,seqlen,epochs,batch,lora_rank,load_s,train_total_s,epoch_s,peak_mem_mb,epoch_times
+TPU_v5_lite_20261109_020835,tpu,TPU v5 lite,1,0.11.2,3.15.1,0.33.0,3.13.18,release-colab-external-images_20261106-060046_RC00,256,3,1,4,57.5,40.8,6.14,6419.8,"[27.5, 6.1, 6.1]"
+NVIDIA_GeForce_RTX_5070_Ti_20261108_220636,gpu,NVIDIA GeForce RTX 5070 Ti,1,torch-2.11.0+cu128,3.15.1,0.33.0,3.12.15,local (not Colab); Keras3 torch backend; mixed_bfloat16 + jit_compile,256,3,1,4,3.2,253.8,43.28,6553.4,"[165.7, 43.1, 43.5]"
+NVIDIA_GeForce_RTX_5070_Ti_20261108_215313,gpu,NVIDIA GeForce RTX 5070 Ti,1,torch-2.11.0+cu128,3.15.1,0.33.0,3.12.15,local (not Colab); Keras3 torch backend,256,3,1,4,30.8,636.4,210.02,6268.6,"[215.7, 210.5, 209.5]"
